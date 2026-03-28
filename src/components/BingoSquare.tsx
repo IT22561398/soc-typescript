@@ -8,15 +8,15 @@ interface BingoSquareProps {
 
 export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
   const baseClasses =
-    'relative flex items-center justify-center p-1 text-center border border-gray-300 rounded transition-all duration-150 select-none min-h-[60px] text-xs leading-tight';
+    'relative flex items-center justify-center p-1 text-center cyber-border rounded-xl transition-all duration-150 select-none min-h-[60px] text-xs leading-tight neon shadow-lg font-mono';
 
   const stateClasses = square.isMarked
     ? isWinning
-      ? 'bg-amber-200 border-amber-400 text-amber-900'
-      : 'bg-marked border-marked-border text-green-800'
-    : 'bg-white text-gray-700 active:bg-gray-100';
+      ? 'bg-[var(--color-bingo)] border-[var(--color-bingo)] text-black animate-pulse neon-flicker'
+      : 'bg-[var(--color-marked)] border-[var(--color-marked-border)] text-[var(--color-accent)] shadow-[0_0_16px_4px_var(--color-cyberpink)] neon-flicker'
+    : 'bg-[#18122B] text-[var(--color-accent)] hover:bg-[var(--color-accent-light)] hover:text-black neon';
 
-  const freeSpaceClasses = square.isFreeSpace ? 'font-bold text-sm' : '';
+  const freeSpaceClasses = square.isFreeSpace ? 'font-extrabold text-base neon neon-flicker' : '';
 
   return (
     <button
@@ -25,10 +25,13 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
       className={`${baseClasses} ${stateClasses} ${freeSpaceClasses}`}
       aria-pressed={square.isMarked}
       aria-label={square.isFreeSpace ? 'Free space' : square.text}
+      style={{ textShadow: square.isMarked ? '0 0 8px #ff00ea, 0 0 16px #00fff7' : '0 0 4px #00fff7', fontFamily: 'VT323, Orbitron, Share Tech Mono, monospace' }}
     >
-      <span className="wrap-break-word hyphens-auto">{square.text}</span>
+      <span className="wrap-break-word hyphens-auto text-base md:text-lg lg:text-xl">
+        {square.text}
+      </span>
       {square.isMarked && !square.isFreeSpace && (
-        <span className="absolute top-0.5 right-0.5 text-green-600 text-xs">✓</span>
+        <span className="absolute top-1 right-1 text-(--color-marked-border) text-lg neon neon-flicker">✓</span>
       )}
     </button>
   );
